@@ -1,0 +1,43 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item active" aria-current="page">Notices</li>
+    <li class="breadcrumb-item active" aria-current="page"><a routerLink="/notice/new">Add new Notice</a></li>
+  </ol>
+</nav>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th scope="col">Title</th>
+      <th scope="col" style="text-align: center">PublicationDate</th>
+      <th scope="col" style="text-align: center">Viewed</th>
+      <th scope="col"></th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let notice of noticePagination.notices">
+      <td>{{notice.title}}</td>
+      <td style="text-align: center">{{notice.publicationDate | date:"dd/MM/yy HH:mm:ss" }}</td>
+      <td style="text-align: center">{{notice.viewDate ? "X" : ""}}</td>
+      <td style="text-align: center">
+        <a [routerLink]="['', 'notice', notice.id, 'view']" class="btn btn-outline-primary btn-sm mr-2">View</a>
+        <a [routerLink]="['', 'notice', notice.id, 'update']" class="btn btn-outline-info btn-sm mr-2">Update</a>
+        <a [routerLink]="['', 'notice', notice.id, 'delete']" class="btn btn-outline-danger btn-sm mr-2">Delete</a>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<div>
+  <div *ngIf="noticePagination.totalPages > 1">
+    <span>{{(noticePagination.offset + 1) + "-" +
+      (((noticePagination.offset + noticePagination.pageSize) > noticePagination.totalElements) ?
+        noticePagination.totalElements : (noticePagination.offset + noticePagination.pageSize)) +
+      " of " + noticePagination.totalElements}}</span>
+    <button class="btn btn-secondary" [disabled]="currentPage == 0" (click)="previousPage()">
+      &lt;
+    </button>
+    <button class="btn btn-secondary" [disabled]="currentPage == noticePagination.totalPages-1" (click)="nextPage()">
+      &gt;
+    </button>
+  </div>
+</div>

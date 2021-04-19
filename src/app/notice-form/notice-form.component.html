@@ -1,0 +1,44 @@
+<nav aria-label="breadcrumb">
+  <ol class="breadcrumb">
+    <li class="breadcrumb-item"><a routerLink="/notice">Notices</a></li>
+    <li class="breadcrumb-item active" aria-current="page">{{pageTitle}}</li>
+  </ol>
+</nav>
+
+<form #frm="ngForm" (ngSubmit)="submitForm(frm)">
+  <input type="text" class="form-control" name="id" [ngModel]="notice.id" hidden>
+  <div class="form-group">
+    <label for="txtTitle">Title</label>
+    <input type="text" class="form-control" #title="ngModel" name="title" [ngModel]="notice.title" minlength="3" required [readonly]="currentAction == 'view'">
+    <div class="text-danger" *ngIf="!title.valid && title.touched">
+      <div>The Title is required!</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="txtDescription">Description</label>
+    <input type="text" class="form-control" #description="ngModel" name="description" [ngModel]="notice.description" minlength="3" required [readonly]="currentAction == 'view'">
+    <div class="text-danger" *ngIf="!description.valid && description.touched">
+      <div>The Description is required!</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="txtPublicationDate">PublicationDate</label> &nbsp;
+    <input *ngIf="currentAction == 'view'" type="datetime" class="form-control" #publicationDate="ngModel" name="publicationDate" [ngModel]="notice.publicationDate | date:'dd/MM/yy HH:mm:ss'" minlength="10" required [readonly]="currentAction == 'view'">
+    <div *ngIf="currentAction != 'view'" >
+      <div>
+        <ejs-datetimepicker  #publicationDate="ngModel" name="publicationDate" [(ngModel)]='notice.publicationDate' width="230px" required [readonly]="currentAction == 'view'"></ejs-datetimepicker>
+      </div>
+      <div class="text-danger" *ngIf="!publicationDate.valid && publicationDate.touched">
+        <div>The PublicationDate is required!</div>
+      </div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="txtViewDate">ViewDate</label>
+    <input *ngIf="currentAction == 'view'" type="datetime" class="form-control" #viewDate="ngModel" name="viewDate" [ngModel]="notice.viewDate | date:'dd/MM/yy HH:mm:ss'" minlength="10" [readonly]="currentAction == 'view'">
+    <div *ngIf="currentAction != 'view'" >
+      <ejs-datetimepicker  #viewDate="ngModel" name="viewDate" [(ngModel)]='notice.viewDate' width="230px" [readonly]="currentAction == 'view'"></ejs-datetimepicker>
+    </div>
+  </div>
+  <button *ngIf="currentAction != 'view'" type="submit" [disabled]="!frm.valid" class="btn btn-primary">Save</button>
+</form>

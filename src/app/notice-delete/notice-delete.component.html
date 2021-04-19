@@ -1,0 +1,10 @@
+<div class="jumbotron">
+  <h1 class="mb-2">Do you really wish to delete this Notice?</h1>
+  <p class="lead"><strong>Title:</strong>{{notice.title}}</p>
+  <p class="lead"><strong>Description:</strong>{{notice.description}}</p>
+  <p class="lead"><strong>PublicationDate:</strong>{{notice.publicationDate | date:'dd/MM/yy HH:mm:ss'}}</p>
+  <p class="lead"><strong>ViewDate:</strong>{{notice.viewDate | date:'dd/MM/yy HH:mm:ss'}}</p>
+  <hr class="my-4">
+  <a routerLink="/notice" class="btn btn-primary mr-3" style="width: 100px;">No</a>
+  <button type="button" (click)="deleteNotice()" class="btn btn-danger" style="width: 100px;">Yes</button>
+</div>
